@@ -1,7 +1,10 @@
 package com.yassine.department.restControllers;
 
+import com.yassine.department.config.Configuration;
 import com.yassine.department.dto.DepartmentDto;
 import com.yassine.department.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +15,18 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/departments")
-@AllArgsConstructor
 public class DepartmentController {
     private DepartmentService departmentService;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    Configuration configuration;
+
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 
     @GetMapping("{code}")
     public ResponseEntity<DepartmentDto> getDepByCode(@PathVariable("code") String code )
@@ -22,4 +34,17 @@ public class DepartmentController {
         return  new ResponseEntity<DepartmentDto>(
                 departmentService.getDepartmentByCode(code), HttpStatus.OK);
     }
+
+    @GetMapping("/version")
+    public ResponseEntity<String> version()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    }
+
+    @GetMapping("/author")
+    public ResponseEntity<String> retrieveAuthorInfo() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(configuration.getName()+" "+configuration.getEmail() );
+    }
+
 }

@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    active: "default"
+  config:
+    import:
+      - "application-prod.yml"
+      - "application-qa.yml"
   application:
     name: department
   datasource:
@@ -27,3 +33,9 @@ management:
 eureka:
   instance:
     prefer-ip-address: true
+
+build:
+  version: "1.0"
+author:
+  name: "yassine Benabda"
+  email: "yassinebenabda@gmail.com"
