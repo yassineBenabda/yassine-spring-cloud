@@ -1,10 +1,10 @@
 spring:
   profiles:
-    active: "default"
+    active: "prod"
   config:
-    import:
-      - "application-prod.yml"
-      - "application-qa.yml"
+    import: "optional:configserver:http://localhost:9999/"
+
+
   application:
     name: department
   datasource:
@@ -18,7 +18,7 @@ spring:
       ddl-auto: update
   cloud:
     config:
-      enabled: false
+      enabled: true
     discovery:
       enabled: true
   eureka:
@@ -33,9 +33,3 @@ management:
 eureka:
   instance:
     prefer-ip-address: true
-
-build:
-  version: "1.0"
-author:
-  name: "yassine Benabda"
-  email: "yassinebenabda@gmail.com"

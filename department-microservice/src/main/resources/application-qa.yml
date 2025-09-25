@@ -1,7 +1,0 @@
-spring:
-  config:
-    activate:
-      on-profile: "qa"
-author:
-  name: "yassine Benabda [QA]"
-  email: "yassinebenabda@gmail.com [QA]"

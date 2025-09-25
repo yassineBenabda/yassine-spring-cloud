@@ -1,0 +1,5 @@
+build :
+  version : "2.0"
+author:
+  name: "yassine ben abda [PROD from config server]"
+  email: "yassine[PROD]@yahoo.com"
