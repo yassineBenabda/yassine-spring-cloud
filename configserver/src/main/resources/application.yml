@@ -11,10 +11,14 @@ spring:
           uri: https://github.com/yassineBenabda/config-repo.git
           default-label: main
           clone-on-start: true
-          #native:
-          #search-loactions : "classpath:/config"
-          #search-locations: file:///C:/Users/benab/IdeaProjects/yassine-spring-cloud/config-repo
+        # native:
+          # search-loactions : "classpath:/config"
+          # search-locations: file:///C:/Users/benab/IdeaProjects/yassine-spring-cloud/config-repo
 
 server:
   port: 9999
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
