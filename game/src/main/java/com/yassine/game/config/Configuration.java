@@ -1,4 +1,4 @@
-package com.yassine.department.config;
+package com.yassine.game.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,6 +1,11 @@
 spring:
   profiles:
-    active: "default"
+    active: "prod"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
   config:
     import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:9999}
   application:
