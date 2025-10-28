@@ -11,21 +11,16 @@ spring:
     gateway:
       routes:
         - id : r1
-          uri : lb://DEPARTMENT
+          uri : lb://GENRE
           predicates:
-            - Path=/api/departments/**
+            - Path=/api/genres/**
         - id: r2
-          uri: lb://TEACHER
+          uri: lb://GAME
           predicates:
-            - Path= /api/teachers/**
+            - Path= /api/games/**
       discovery:
         locator:
           enabled: false
-  eureka:
-    client:
-      service-url:
-        defaultZone: 'http://localhost:8761/eureka/'
-
 management:
   endpoints:
     web:
@@ -35,5 +30,10 @@ management:
     gateway:
       access: unrestricted
 eureka:
-  instance:
-    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
+      instance:
+        prefer-ip-address: true
