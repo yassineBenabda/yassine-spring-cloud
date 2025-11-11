@@ -9,15 +9,15 @@ spring:
     discovery:
       enabled: true
     gateway:
-      routes:
-        - id : r1
-          uri : lb://GENRE
-          predicates:
-            - Path=/api/genres/**
-        - id: r2
-          uri: lb://GAME
-          predicates:
-            - Path= /api/games/**
+#      routes:
+#        - id : r1
+#          uri : lb://GENRE
+#          predicates:
+#            - Path=/api/genres/**
+#        - id: r2
+#          uri: lb://GAME
+#          predicates:
+#            - Path= /api/games/**
       discovery:
         locator:
           enabled: false
@@ -37,3 +37,11 @@ eureka:
       defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
       instance:
         prefer-ip-address: true
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000

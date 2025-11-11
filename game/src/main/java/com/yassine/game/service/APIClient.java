@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 //@FeignClient(url = "http://localhost:8080", value = "DEPARTMENT")
-@FeignClient(name = "GENRE", fallback = GenFallBack.class)
+//@FeignClient(name = "GENRE", fallback = GenFallBack.class)
+@FeignClient(name = "GENRE")
 public interface APIClient {
 
     @GetMapping("api/genres/{genre-code}")
