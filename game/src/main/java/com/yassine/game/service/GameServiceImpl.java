@@ -21,6 +21,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public APIResponseDto getGameById(Long id) {
+        String dname;
         Game game = gameRepository.findById(id).get();
 
         /*DepartmentDto departmentDto = webClient.get()
@@ -31,13 +32,17 @@ public class GameServiceImpl implements GameService {
                 .block();*/
 
         GenreDto genreDto = apiClient.getGenByCode(game.getGenCode());
+        if (genreDto == null)
+            dname = "Undefined";
+        else
+            dname = genreDto.getGenName();
 
         GameDto gameDto = new GameDto(
                 game.getId(),
                 game.getFirstName(),
                 game.getLastName(),
                 game.getGenCode(),
-                genreDto.getGenName()
+                dname
 
         );
 

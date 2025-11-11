@@ -1,11 +1,11 @@
 spring:
   profiles:
     active: "prod"
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+#  rabbitmq:
+#    host: "localhost"
+#    port: 5672
+#    username: "guest"
+#    password: "guest"
   config:
     import: optional:configserver:${CONFIG_SERVICE_URL:http://localhost:9999}
   application:
@@ -38,8 +38,4 @@ eureka:
       defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
   instance:
     prefer-ip-address: true
-build :
-  version : "123.0"
-author:
-  name: "yassine ben abda"
-  email: "yassine@yahoo.com"
+    hostname: localhost
