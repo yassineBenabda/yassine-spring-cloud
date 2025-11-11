@@ -39,8 +39,7 @@ public class GameServiceImpl implements GameService {
 
         GameDto gameDto = new GameDto(
                 game.getId(),
-                game.getFirstName(),
-                game.getLastName(),
+                game.getGameName(),
                 game.getGenCode(),
                 dname
 

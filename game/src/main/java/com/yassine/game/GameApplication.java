@@ -21,8 +21,7 @@ public class GameApplication {
     CommandLineRunner commandLineRunner(GameRepository gameRepository) {
         return args -> {
             gameRepository.save(Game.builder()
-                    .firstName("Yassine")
-                    .lastName("Ben Abda")
+                    .gameName("Tekken 7")
                     .genCode("AT")
                     .build());
 
