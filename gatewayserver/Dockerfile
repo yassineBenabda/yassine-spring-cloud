@@ -1,5 +1,5 @@
 #Start with a base image containing Java runtime
-FROM openjdk:21
+FROM openjdk:21-ea
 
 #Information around who maintains the image
 LABEL "org.opencontainers.image.authors"="yassine.com"
