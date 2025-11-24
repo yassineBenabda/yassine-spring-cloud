@@ -18,10 +18,10 @@ services:
 
   # Keycloak Service
   keycloak:
-    image: quay.io/keycloak/keycloak:26.4.5
+    image: quay.io/keycloak/keycloak:26.4.5 # Updated to specific version
     container_name: keycloak
     ports:
-      - "8080:8080"
+      - "8090:8080" # Exposed port for access (matching the jwk-set-uri in gatewayserver)
     environment:
       # Keycloak Admin Credentials
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
@@ -33,9 +33,9 @@ services:
       KC_DB_PASSWORD: password
       # Production mode settings
       KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_PORT: 8090 # Match the exposed port
       KC_PROXY_ADDRESS_FORWARDING: "true"
-      KC_HEALTH_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true" # Enable health checks
     command: [ "start-dev" ]
     depends_on:
       keycloak-db:
@@ -71,8 +71,8 @@ services:
     expose:
       - "8082"
     environment:
-      DISCOVERY_SERVICE_URL: http://eurekaserver:8761/eureka
-      CONFIG_SERVICE_URL: http://configserver:9999
+      - DISCOVERY_SERVICE_URL=http://eurekaserver:8761/eureka
+      - CONFIG_SERVICE_URL=http://configserver:9999
     healthcheck:
       test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
     depends_on:
@@ -81,14 +81,43 @@ services:
       configserver:
         condition: service_healthy
 
+  gatewayserver:
+    build: ./gatewayserver
+    container_name: gatewayserver
+    ports:
+      - "8888:8888"
+    environment:
+      - DISCOVERY_SERVICE_URL=http://eurekaserver:8761/eureka
+    healthcheck:
+      test: "curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1"
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+
+#  genre-ms2:
+#    build: ./genre
+#    container_name: genre-ms2
+#    ports:
+#      - "8084:8080"
+#    environment:
+#      - DISCOVERY_SERVICE_URL=http://eurekaserver:8761/eureka
+#      - CONFIG_SERVICE_URL=http://configserver:9999
+#    healthcheck:
+#      test: "curl --fail --silent localhost:8084/actuator/health | grep UP || exit 1"
+#    depends_on:
+#      eurekaserver:
+#        condition: service_healthy
+#      configserver:
+#        condition: service_healthy
+
   game-ms:
     build: ./game
     container_name: game-ms
     expose:
       - "8081"
     environment:
-      DISCOVERY_SERVICE_URL: http://eurekaserver:8761/eureka
-      CONFIG_SERVICE_URL: http://configserver:9999
+      - DISCOVERY_SERVICE_URL=http://eurekaserver:8761/eureka
+      - CONFIG_SERVICE_URL=http://configserver:9999
     healthcheck:
       test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
     depends_on:
@@ -99,21 +128,17 @@ services:
       genre-ms:
         condition: service_healthy
 
-  gatewayserver:
-    build: ./gatewayserver
-    container_name: gatewayserver
-    ports:
-      - "8888:8888"
-    environment:
-      DISCOVERY_SERVICE_URL: http://eurekaserver:8761/eureka
-      KEYCLOAK_JWKS_URI: http://keycloak:8080/realms/master/protocol/openid-connect/certs
-    healthcheck:
-      test: "curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1"
-    depends_on:
-      eurekaserver:
-        condition: service_healthy
-      keycloak:
-        condition: service_healthy
+#  rabbitmq:
+#    image: rabbitmq:4.0-management
+#    container_name: rabbitmq
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    healthcheck:
+#      test: [ "CMD", "rabbitmq-diagnostics", "-q", "status" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
 volumes:
   keycloak_data:

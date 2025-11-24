@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenreController {
     private GenreService genreService;
 
-//    @Value("${build.version}")
-//    private String buildVersion;
-//
-//    @Autowired
-//    Configuration configuration;
+    @Value("${build.version}")
+    private String buildVersion;
+
+    @Autowired
+    Configuration configuration;
 
     public GenreController(GenreService genreService) {
         this.genreService = genreService;
@@ -34,16 +34,16 @@ public class GenreController {
                 genreService.getGenreByCode(code), HttpStatus.OK);
     }
 
-//    @GetMapping("/version")
-//    public ResponseEntity<String> version()
-//    {
-//        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
-//    }
-//
-//    @GetMapping("/author")
-//    public ResponseEntity<String> retrieveAuthorInfo() {
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(configuration.getName()+" "+configuration.getEmail() );
-//    }
+    @GetMapping("/version")
+    public ResponseEntity<String> version()
+    {
+        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    }
+
+    @GetMapping("/author")
+    public ResponseEntity<String> retrieveAuthorInfo() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(configuration.getName()+" "+configuration.getEmail() );
+    }
 
 }

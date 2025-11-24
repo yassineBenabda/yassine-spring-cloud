@@ -24,11 +24,11 @@ public class GameServiceImpl implements GameService {
         String dname;
         Game game = gameRepository.findById(id).get();
 
-        /*DepartmentDto departmentDto = webClient.get()
-                .uri("http://localhost:8080/api/departments/" +
-                        teacher.getDepCode())
+        /*GenreDto genreDto = webClient.get()
+                .uri("http://localhost:8082/api/genres/" +
+                        teacher.getGenCode())
                 .retrieve()
-                .bodyToMono(DepartmentDto.class)
+                .bodyToMono(GenreDto.class)
                 .block();*/
 
         GenreDto genreDto = apiClient.getGenByCode(game.getGenCode());

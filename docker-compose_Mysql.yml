@@ -14,7 +14,7 @@ services:
     build: ./genre
     container_name: genre-ms
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/test"
       SPRING_DATASOURCE_USERNAME: root
